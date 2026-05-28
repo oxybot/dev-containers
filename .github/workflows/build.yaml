@@ -48,15 +48,14 @@ jobs:
       - name: Install ORAS
         uses: oras-project/setup-oras@v2
 
-      - name: Scan image with Trivy (report txt)
-        run: |
-          docker run --rm \
-            aquasec/trivy:latest image "${IMAGE_NAME}@${{ steps.push.outputs.digest }}" \
-            --scanners vuln \
-            --severity HIGH,CRITICAL \
-            --ignore-unfixed \
-            --format table \
-            --output trivy-report.txt
+      - name: Run Trivy vulnerability scanner (txt report)
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest }}
+          format: table
+          output: trivy-report.txt
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
 
       - name: Upload Trivy report (txt)
         uses: actions/upload-artifact@v7
@@ -65,15 +64,14 @@ jobs:
           name: trivy-report-table
           path: trivy-report.txt
 
-      - name: Scan image with Trivy (report json)
-        run: |
-          docker run --rm \
-            aquasec/trivy:latest image "${IMAGE_NAME}@${{ steps.push.outputs.digest }}" \
-            --scanners vuln \
-            --severity HIGH,CRITICAL \
-            --ignore-unfixed \
-            --format json \
-            --output trivy-report.json
+      - name: Run Trivy vulnerability scanner (json report)
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest }}
+          format: json
+          output: trivy-report.json
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
 
       - name: Upload Trivy report (json)
         uses: actions/upload-artifact@v7
