@@ -1,5 +1,8 @@
 FROM mcr.microsoft.com/devcontainers/typescript-node:4-24
 
+# Upgrade default packages
+RUN apt-get update && apt-get upgrade -y
+
 # Ensure latest npm and pnpm are installed
 RUN npm install -g npm@latest pnpm@latest
 

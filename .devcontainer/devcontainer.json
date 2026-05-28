@@ -3,7 +3,11 @@
 {
 	"name": "Debian",
 	"image": "mcr.microsoft.com/devcontainers/base:trixie",
-	"features": {},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"moby": false
+		}
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
