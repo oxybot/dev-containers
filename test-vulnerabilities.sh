@@ -15,6 +15,10 @@ fi
 
 # Scan the image for vulnerabilities
 echo "Scanning the image for vulnerabilities..."
-trivy image --severity HIGH,CRITICAL dev-env:local --ignore-unfixed --format table --output vulnerabilities.txt
+trivy image --severity HIGH,CRITICAL dev-env:local \
+    --ignore-unfixed \
+    --scanners vuln \
+    --format table \
+    --output vulnerabilities.txt
 
 echo "Vulnerability scan completed. Results saved to vulnerabilities.txt"

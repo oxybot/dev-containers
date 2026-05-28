@@ -10,6 +10,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/typescript-node-with-playwright
 
     steps:
       - uses: actions/checkout@v6
@@ -25,18 +27,63 @@ jobs:
         uses: docker/metadata-action@v6
         id: meta
         with:
-          images: ghcr.io/${{ github.repository_owner }}/typescript-node-with-playwright
+          images: ${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value=4,enable={{is_default_branch}}
             type=raw,value=4-24,enable={{is_default_branch}}
-            
-      - uses: docker/build-push-action@v7
+
+      - name: Build and push multi-arch image
+        id: push
+        uses: docker/build-push-action@v7
         with:
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Install ORAS
+        uses: oras-project/setup-oras@v2
+
+      - name: Scan image with Trivy (report txt)
+        run: |
+          docker run --rm \
+            aquasec/trivy:latest image "${IMAGE_NAME}@${{ steps.push.outputs.digest }}" \
+            --scanners vuln \
+            --severity HIGH,CRITICAL \
+            --ignore-unfixed \
+            --format table \
+            --output trivy-report.txt
+
+      - name: Upload Trivy report (txt)
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: trivy-report-table
+          path: trivy-report.txt
+
+      - name: Scan image with Trivy (report json)
+        run: |
+          docker run --rm \
+            aquasec/trivy:latest image "${IMAGE_NAME}@${{ steps.push.outputs.digest }}" \
+            --scanners vuln \
+            --severity HIGH,CRITICAL \
+            --ignore-unfixed \
+            --format json \
+            --output trivy-report.json
+
+      - name: Upload Trivy report (json)
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: trivy-report-json
+          path: trivy-report.json
+
+      - name: Attach Trivy JSON as OCI artifact
+        run: |
+          oras attach "${IMAGE_NAME}@${{ steps.push.outputs.digest }}" \
+            --artifact-type application/vnd.aquasec.trivy.report.v1+json \
+            trivy-report.json:application/json

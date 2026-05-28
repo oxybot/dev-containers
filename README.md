@@ -51,6 +51,16 @@ Setting up Playwright in a dev container typically requires installing both syst
 
 This image is rebuilt automatically every **Tuesday at midnight** to pick up the latest base image updates, security patches, and Playwright releases.
 
+## Vulnerability Reporting
+
+A Trivy report is generated aside of the image.
+
+The workflow generates `trivy-report.json` for the exact pushed manifest digest and attaches it to the image as an OCI artifact with type `application/vnd.aquasec.trivy.report.v1+json`.
+
+- Reported severities: `HIGH`, `CRITICAL`
+- Scope: OS packages and language libraries
+- `--ignore-unfixed` is enabled
+
 ## License
 
 [MIT](LICENSE)
