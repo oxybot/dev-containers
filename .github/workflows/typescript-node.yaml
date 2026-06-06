@@ -11,7 +11,7 @@ jobs:
       contents: read
       packages: write
     env:
-      IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/typescript-node-with-playwright
+      IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/typescript-node
 
     steps:
       - uses: actions/checkout@v6
@@ -40,13 +40,13 @@ jobs:
         id: push
         uses: docker/build-push-action@v7
         with:
-          file: Dockerfile
+          file: typescript-node.Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           provenance: false
           sbom: false
-          cache-from: type=gha,scope=typescript-node-with-playwright
-          cache-to: type=gha,mode=max,scope=typescript-node-with-playwright
+          cache-from: type=gha,scope=typescript-node
+          cache-to: type=gha,mode=max,scope=typescript-node
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 

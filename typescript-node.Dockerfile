@@ -1,7 +1,11 @@
 FROM mcr.microsoft.com/devcontainers/typescript-node:4-24
 
 # Upgrade default packages
-RUN apt-get update && apt-get upgrade -y
+USER root
+RUN apt-get update \
+	&& DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/*
+USER node
 
 # Ensure latest npm and pnpm are installed
 RUN npm install -g npm@latest pnpm@latest

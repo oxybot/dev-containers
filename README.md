@@ -1,66 +1,35 @@
-# TypeScript / Node.js with Playwright Dev Container Image
+# Dev Containers
 
-A ready-to-use dev container image that extends the official [TypeScript & Node.js dev container](https://github.com/devcontainers/images/tree/main/src/typescript-node) with full [Playwright](https://playwright.dev/) browser testing support — browsers and all system dependencies pre-installed.
+Simple Dockerfiles for building development container images.
+Provides multiple variants that supports both arm64 and amd64 architectures, with a focus on providing a solid base for development, for instance with Playwright testing support embedded in all images.
 
-## What's Included
+## Available Images
 
-| Component | Details |
-|---|---|
-| Base image | `mcr.microsoft.com/devcontainers/typescript-node:4-24` (Node.js 24) |
-| Package managers | Latest `npm` and `pnpm` |
-| Playwright browsers | Chromium, Firefox, WebKit (pre-installed) |
-| Playwright system deps | All OS-level dependencies pre-installed |
+### [`universal`](./universal.md)
 
-## Supported Platforms
+A universal image providing **node**, **.net** and **python** capabilities.
 
-- `linux/amd64`
-- `linux/arm64`
-
-## Usage
-
-Reference this image in your `.devcontainer/devcontainer.json`:
-
-```json
-{
-  "name": "My Project",
-  "image": "ghcr.io/oxybot/typescript-node-with-playwright:latest"
-}
+```bash
+docker pull ghcr.io/oxybot/dev-containers/universal:latest
 ```
 
-Or use it as the base in a custom `Dockerfile`:
+See detailed documentation: [universal.md](./universal.md).
 
-```dockerfile
-FROM ghcr.io/oxybot/typescript-node-with-playwright:latest
+### [`typescript-node`](./typescript-node.md)
 
-# Add your own customizations
+An image focused on **javascript** and **typescript** development.
+
+```bash
+docker pull ghcr.io/oxybot/dev-containers/typescript-node:latest
 ```
 
-## Available Tags
+See detailed documentation: [typescript-node.md](./typescript-node.md).
 
-| Tag | Description |
-|---|---|
-| `latest` | Latest build from the default branch |
-| `4` | Node.js major version 4x series |
-| `4-24` | Node.js 24, TypeScript 4x series |
+## Variants and versions
 
-## Why Use This Image?
-
-Setting up Playwright in a dev container typically requires installing both system-level dependencies and browser binaries, which can be slow and error-prone. This image ships with everything pre-installed so your container starts ready to run Playwright tests — no extra setup steps needed.
-
-## Update Cadence
-
-This image is rebuilt automatically every **Tuesday at midnight** to pick up the latest base image updates, security patches, and Playwright releases.
-
-## Vulnerability Reporting
-
-A Trivy report is generated aside of the image.
-
-The workflow generates `trivy-report.json` for the exact pushed manifest digest and attaches it to the image as an OCI artifact with type `application/vnd.aquasec.trivy.report.v1+json`.
-
-- Reported severities: `HIGH`, `CRITICAL`
-- Scope: OS packages and language libraries
-- `--ignore-unfixed` is enabled
+Each image may have multiple variants (e.g. different Node.js versions).
+Check the individual image documentation for details on available tags and their contents.
 
 ## License
 
-[MIT](LICENSE)
+MIT. See `LICENSE`.
