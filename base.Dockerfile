@@ -2,7 +2,6 @@ FROM mcr.microsoft.com/devcontainers/base:debian
 
 ARG USERNAME=vscode
 ARG NODE_VERSION=24
-ARG EXTRA_PACKAGES=""
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -11,7 +10,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 USER root
 RUN apt-get update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --no-install-recommends \
-    && apt-get install -y curl wget ${EXTRA_PACKAGES} --no-install-recommends \
+    && apt-get install -y curl wget --no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
 COPY welcome.sh /usr/local/share/dev-containers/welcome.sh

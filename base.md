@@ -7,7 +7,7 @@ A foundational dev container image built on the official Dev Containers Debian b
 | Component | Details |
 |---|---|
 | Base image | `mcr.microsoft.com/devcontainers/base:debian` |
-| System tools | `curl`, `wget`, plus optional `EXTRA_PACKAGES` build arg |
+| System tools | `curl`, `wget` |
 | Node.js | Installed via `nvm` with default `NODE_VERSION=24` |
 | Package manager | Latest `npm` (global) |
 | Browser tooling | Playwright browsers and OS dependencies (`playwright install-deps` and `playwright install`) |
