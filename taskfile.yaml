@@ -5,8 +5,7 @@ version: '3'
 tasks:
   build-base:
     desc: Build the base image
-    cmds:
-      - docker build
+    cmd: docker build
           -t base:local
           -f base.Dockerfile
           --build-arg USERNAME=vscode
@@ -14,16 +13,27 @@ tasks:
           .
     silent: true
 
+  build-node:
+    desc: Build the Node.js image
+    cmd: docker build -t typescript-node:local -f typescript-node.Dockerfile .
+    silent: true
+
   build-universal:
     desc: Build the universal image
-    cmds:
-      - docker build
-          -t universal:local
-          -f universal.Dockerfile
-          .
+    cmd: docker build -t universal:local -f universal.Dockerfile .
     silent: true
+
+  start-base:
+    desc: Start a container from the base image
+    cmd: docker run --rm -it base:local bash
+    silent: true
+
+  start-node:
+    desc: Start a container from the Node.js image
+    cmd: docker run --rm -it typescript-node:local bash
+    silent: true
+
   start-universal:
     desc: Start a container from the universal image
-    cmds:
-      - docker run --rm -it universal:local bash
+    cmd: docker run --rm -it universal:local bash
     silent: true

@@ -33,6 +33,7 @@ RUN nvm install "$NODE_VERSION" \
 # Install Playwright browsers and its dependencies
 RUN npx playwright install --with-deps
 
+# Finalize the image
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 ENV OXYBOT_CONTENT=playwright
