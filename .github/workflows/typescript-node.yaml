@@ -1,6 +1,12 @@
 name: typescript-node-with-playwright
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'typescript-node.Dockerfile'
+      - '.github/workflows/typescript-node.yaml'
   schedule:
     - cron: '0 0 * * 2' # Every Tuesday at midnight
 
