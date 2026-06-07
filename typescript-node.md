@@ -1,15 +1,15 @@
 # TypeScript / Node.js with Playwright Dev Container Image
 
-A ready-to-use dev container image that extends the official [TypeScript & Node.js dev container](https://github.com/devcontainers/images/tree/main/src/typescript-node) with full [Playwright](https://playwright.dev/) browser testing support — browsers and all system dependencies pre-installed.
+A ready-to-use dev container image that extends the [oxybot base dev container](./base.md) with [pnpm](https://pnpm.io/) — Node.js, npm, and full [Playwright](https://playwright.dev/) browser testing support are all inherited from the base image.
 
 ## What's Included
 
 | Component | Details |
 |---|---|
-| Base image | `mcr.microsoft.com/devcontainers/typescript-node:4-24` (Node.js 24) |
-| Package managers | Latest `npm` and `pnpm` |
-| Playwright browsers | Chromium, Firefox, WebKit (pre-installed) |
-| Playwright system deps | All OS-level dependencies pre-installed |
+| Base image | `ghcr.io/oxybot/base:latest` (Node.js 24, Playwright pre-installed) |
+| Package managers | Latest `npm` (from base) and `pnpm` |
+| Playwright browsers | Chromium, Firefox, WebKit (pre-installed via base) |
+| Playwright system deps | All OS-level dependencies pre-installed (via base) |
 
 ## Supported Platforms
 
