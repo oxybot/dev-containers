@@ -25,7 +25,7 @@ RUN touch $BASH_ENV \
     && echo '[ -f /usr/local/share/dev-containers/welcome.sh ] && /usr/local/share/dev-containers/welcome.sh' >> ~/.bashrc
 
 # Install node.js
-RUN NVM_VERSION="$(curl -fsSL https://api.github.com/repos/nvm-sh/nvm/releases/latest | sed -n 's/.*"tag_name": "\([^"]*\)".*/\1/p')" \
+RUN NVM_VERSION="$(git ls-remote --tags --refs https://github.com/nvm-sh/nvm.git | awk -F/ '{print $3}' | sort -V | tail -n1)" \
     && curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh" | PROFILE="$BASH_ENV" bash
 RUN nvm install "$NODE_VERSION" \
     && nvm alias default "$NODE_VERSION" \
