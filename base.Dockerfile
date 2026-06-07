@@ -32,8 +32,7 @@ RUN nvm install "$NODE_VERSION" \
     && npm install -g npm@latest
 
 # Install Playwright browsers and its dependencies
-RUN npx -y playwright install-deps
-RUN npx -y playwright install
+RUN npx playwright install --with-deps
 
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}

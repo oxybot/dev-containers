@@ -2,6 +2,12 @@ name: base
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'base.Dockerfile'
+      - '.github/workflows/base.yaml'
   schedule:
     - cron: '0 0 * * 2'
 
