@@ -8,16 +8,16 @@ RUN apt-get update \
         python3 \
     && rm -rf /var/lib/apt/lists/*
 
-# Ensure latest pnpm are installed
-RUN npm install -g pnpm@latest
-
 # Install .Net sdk
 USER root
 RUN curl -L https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
 RUN chmod +x /tmp/dotnet-install.sh
 RUN DOTNET_INSTALL_DIR=/usr/share/dotnet /tmp/dotnet-install.sh --version latest
 
+# Ensure latest pnpm are installed
 USER ${USERNAME}
-WORKDIR /home/${USERNAME}
+RUN npm install -g pnpm@latest
 
+# Finalize the image
+WORKDIR /home/${USERNAME}
 ENV OXYBOT_CONTENT="node, python, .net"
