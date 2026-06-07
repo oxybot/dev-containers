@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+tasks:
+  build-base:
+    desc: Build the base image
+    cmds:
+      - docker build
+          -t base:local
+          -f base.Dockerfile
+          --build-arg USERNAME=vscode
+          --build-arg NODE_VERSION=24
+          .
+    silent: true
+
+  build-universal:
+    desc: Build the universal image
+    cmds:
+      - docker build
+          -t universal:local
+          -f universal.Dockerfile
+          .
+    silent: true
+  start-universal:
+    desc: Start a container from the universal image
+    cmds:
+      - docker run --rm -it universal:local bash
+    silent: true
