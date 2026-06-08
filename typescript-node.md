@@ -40,8 +40,7 @@ FROM ghcr.io/oxybot/typescript-node-with-playwright:latest
 | Tag | Description |
 |---|---|
 | `latest` | Latest build from the default branch |
-| `4` | Node.js major version 4x series |
-| `4-24` | Node.js 24, TypeScript 4x series |
+| `24` | Node.js 24 |
 
 ## Why Use This Image?
 

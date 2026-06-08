@@ -40,8 +40,7 @@ jobs:
             type=ref,event=branch
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value=4,enable={{is_default_branch}}
-            type=raw,value=4-24,enable={{is_default_branch}}
+            type=raw,value=24,enable={{is_default_branch}}
 
       - name: Build and push multi-arch image
         id: push
