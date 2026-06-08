@@ -1,4 +1,4 @@
-name: typescript-node
+name: node
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - 'typescript-node.Dockerfile'
-      - '.github/workflows/typescript-node.yaml'
+      - 'node.Dockerfile'
+      - '.github/workflows/node.yaml'
   schedule:
     - cron: '0 1 * * 2'
 
@@ -18,7 +18,7 @@ jobs:
       contents: read
       packages: write
     env:
-      IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/typescript-node
+      IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/node
 
     steps:
       - uses: actions/checkout@v6
@@ -46,13 +46,13 @@ jobs:
         id: push
         uses: docker/build-push-action@v7
         with:
-          file: typescript-node.Dockerfile
+          file: node.Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           provenance: false
           sbom: false
-          cache-from: type=gha,scope=typescript-node
-          cache-to: type=gha,mode=max,scope=typescript-node
+          cache-from: type=gha,scope=node
+          cache-to: type=gha,mode=max,scope=node
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
