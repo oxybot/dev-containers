@@ -13,6 +13,8 @@ USER root
 RUN curl -L https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh
 RUN chmod +x /tmp/dotnet-install.sh
 RUN DOTNET_INSTALL_DIR=/usr/share/dotnet /tmp/dotnet-install.sh --version latest
+ENV DOTNET_ROOT=/usr/share/dotnet
+ENV PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 
 # Ensure latest pnpm are installed
 USER ${USERNAME}
