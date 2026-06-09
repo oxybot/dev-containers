@@ -15,7 +15,7 @@ tasks:
 
   build-node:
     desc: Build the Node.js image
-    cmd: docker build -t typescript-node:local -f typescript-node.Dockerfile .
+    cmd: docker build -t node:local -f node.Dockerfile .
     silent: true
 
   build-universal:
@@ -30,10 +30,30 @@ tasks:
 
   start-node:
     desc: Start a container from the Node.js image
-    cmd: docker run --rm -it typescript-node:local bash
+    cmd: docker run --rm -it node:local bash
     silent: true
 
   start-universal:
     desc: Start a container from the universal image
     cmd: docker run --rm -it universal:local bash
+    silent: true
+
+  test-base:
+    desc: Build and test the base image (includes Trivy)
+    cmd: ./tests/run.sh base
+    silent: true
+
+  test-node:
+    desc: Build and test the node image (includes Trivy)
+    cmd: ./tests/run.sh node
+    silent: true
+
+  test-universal:
+    desc: Build and test the universal image (includes Trivy)
+    cmd: ./tests/run.sh universal
+    silent: true
+
+  test-all:
+    desc: Build and test all images (includes Trivy)
+    cmd: ./tests/run.sh all
     silent: true
