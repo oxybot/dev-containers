@@ -15,6 +15,11 @@ RUN chmod +x /tmp/dotnet-install.sh
 RUN DOTNET_INSTALL_DIR=/usr/share/dotnet /tmp/dotnet-install.sh --version latest
 ENV DOTNET_ROOT=/usr/share/dotnet
 ENV PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+RUN printf '%s\n' \
+    'export DOTNET_ROOT=/usr/share/dotnet' \
+    'export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools"' \
+    > /etc/profile.d/dotnet.sh \
+    && chmod 0644 /etc/profile.d/dotnet.sh
 
 # Ensure latest pnpm are installed
 USER ${USERNAME}
