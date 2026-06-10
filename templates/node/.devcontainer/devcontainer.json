@@ -1,7 +1,7 @@
 // For format details, see https://containers.dev/guide/dockerfile.
 {
 	"name": "oxybot node.js",
-	"image": "mcr.microsoft.com/devcontainers/base:alpine${templateOption:imageVariant}"
+	"image": "ghcr.io/oxybot/node:latest"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
