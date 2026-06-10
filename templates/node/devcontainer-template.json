@@ -1,0 +1,18 @@
+{
+    "id": "oxybot-node",
+    "version": "3.4.0",
+    "name": "Oxybot Node",
+    "description": "Oxybot Node.js development container.",
+    "documentationURL": "https://github.com/oxybot/dev-containers/tree/main",
+    "publisher": "oxybot",
+    "licenseURL": "https://github.com/oxybot/dev-containers/templates/blob/main/LICENSE",
+    "options": {
+    },
+    "platforms": [
+        "amd64",
+        "arm64"
+    ],
+    "optionalPaths": [
+        ".github/*"
+    ]
+}
