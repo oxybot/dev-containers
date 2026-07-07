@@ -26,11 +26,33 @@ assert_runtime_user() {
   local image_tag="$1"
   local expected_user="$2"
   local actual_user
+  local error_output
 
-  if ! actual_user="$(run_in_image "$image_tag" 'whoami' 2>&1)"; then
+  if ! actual_user="$(docker image inspect "$image_tag" --format '{{.Config.User}}' 2>&1)"; then
     echo "$actual_user"
-    fail "Container failed to start with default user"
+    fail "Unable to inspect image metadata for runtime user"
   fi
+
+  if [[ -z "$actual_user" ]]; then
+    if ! actual_user="$(run_in_image "$image_tag" 'id -un')"; then
+      error_output="$(run_in_image "$image_tag" 'id -un' 2>&1 || true)"
+      if [[ -n "$error_output" ]]; then
+        echo "$error_output"
+      fi
+      fail "Container failed to start with default user"
+    fi
+  fi
+
+  if [[ -z "$actual_user" ]]; then
+    if [[ -n "$error_output" ]]; then
+      echo "$error_output"
+    fi
+    fail "Unable to determine runtime user"
+  fi
+
+  # Normalize command output in case a shell wrapper emits extra lines.
+  actual_user="${actual_user//$'\r'/}"
+  actual_user="${actual_user##*$'\n'}"
 
   if [[ "$actual_user" != "$expected_user" ]]; then
     fail "Expected default runtime user $expected_user, got $actual_user"
