@@ -14,16 +14,16 @@ on:
     - cron: '0 0 * * 2'
 
 jobs:
-  build-base:
+  base:
     uses: oxybot/dev-containers/.github/workflows/_build-test-push.yaml@main
     with:
       image: base
       dockerfile: base.Dockerfile
       cache_scope: base
 
-  build-node:
+  node:
     uses: oxybot/dev-containers/.github/workflows/_build-test-push.yaml@main
-    needs: build-base
+    needs: base
     with:
       image: node
       dockerfile: node.Dockerfile
@@ -31,9 +31,9 @@ jobs:
       extra_tags: |
         type=raw,value=24,enable={{is_default_branch}}
 
-  build-universal:
+  universal:
     uses: oxybot/dev-containers/.github/workflows/_build-test-push.yaml@main
-    needs: build-base
+    needs: base
     with:
       image: universal
       dockerfile: universal.Dockerfile

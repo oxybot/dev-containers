@@ -77,6 +77,7 @@ jobs:
           push: true
           provenance: false
           sbom: false
-          no-cache: true
+          cache-from: type=gha,scope=${{ inputs.cache_scope }}
+          cache-to: type=gha,mode=max,scope=${{ inputs.cache_scope }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
