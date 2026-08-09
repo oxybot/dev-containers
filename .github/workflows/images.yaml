@@ -80,7 +80,8 @@ jobs:
         if: always()
         with:
           name: trivy-report-${{ matrix.image }}
-          path: test-results/trivy-*.txt
+          path: test-results/trivy-${{ matrix.image }}_ci.txt
+          archive: false
 
       - name: Build and push multi-arch image
         id: push
@@ -91,7 +92,6 @@ jobs:
           push: true
           provenance: false
           sbom: false
-          cache-from: type=gha,scope=${{ matrix.cache_scope }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.cache_scope }}
+          no-cache: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
