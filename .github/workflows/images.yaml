@@ -33,7 +33,7 @@ jobs:
 
   build-universal:
     uses: oxybot/dev-containers/.github/workflows/_build-test-push.yaml@main
-    needs: build-node
+    needs: build-base
     with:
       image: universal
       dockerfile: universal.Dockerfile
