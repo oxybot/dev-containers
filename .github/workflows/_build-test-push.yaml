@@ -12,6 +12,10 @@ on:
       cache_scope:
         required: true
         type: string
+      no_cache:
+        required: false
+        type: boolean
+        default: false
       extra_tags:
         required: false
         type: string
@@ -51,6 +55,8 @@ jobs:
         with:
           file: ${{ inputs.dockerfile }}
           load: true
+          pull: true
+          no-cache: ${{ inputs.no_cache }}
           tags: ${{ inputs.image }}:ci
           cache-from: type=gha,scope=${{ inputs.cache_scope }}
 
@@ -74,6 +80,8 @@ jobs:
         with:
           file: ${{ inputs.dockerfile }}
           platforms: linux/amd64,linux/arm64
+          pull: true
+          no-cache: ${{ inputs.no_cache }}
           push: true
           provenance: false
           sbom: false

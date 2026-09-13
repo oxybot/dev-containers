@@ -2,6 +2,12 @@ name: images
 
 on:
   workflow_dispatch:
+    inputs:
+      no_cache:
+        description: 'Build without cache'
+        required: false
+        type: boolean
+        default: false
   push:
     branches:
       - main
@@ -15,26 +21,29 @@ on:
 
 jobs:
   base:
-    uses: oxybot/dev-containers/.github/workflows/_build-test-push.yaml@main
+    uses: $/.github/workflows/_build-test-push.yaml
     with:
       image: base
       dockerfile: base.Dockerfile
       cache_scope: base
+      no_cache: ${{ inputs.no_cache || github.event_name == 'schedule' }}
 
   node:
-    uses: oxybot/dev-containers/.github/workflows/_build-test-push.yaml@main
+    uses: $/.github/workflows/_build-test-push.yaml
     needs: base
     with:
       image: node
       dockerfile: node.Dockerfile
       cache_scope: node
+      no_cache: ${{ inputs.no_cache || github.event_name == 'schedule' }}
       extra_tags: |
         type=raw,value=24,enable={{is_default_branch}}
 
   universal:
-    uses: oxybot/dev-containers/.github/workflows/_build-test-push.yaml@main
+    uses: $/.github/workflows/_build-test-push.yaml
     needs: base
     with:
       image: universal
       dockerfile: universal.Dockerfile
       cache_scope: universal
+      no_cache: ${{ inputs.no_cache || github.event_name == 'schedule' }}
